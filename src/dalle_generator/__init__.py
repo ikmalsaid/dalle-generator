@@ -9,7 +9,7 @@ from io import BytesIO
 from datetime import datetime
 from selenium import webdriver
 from importlib import resources
-from colorpaws import configure
+from colorpaws import ColorPaws
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -32,7 +32,7 @@ class DalleGenerator():
         - save_to (str): Directory to save outputs.
         - save_as (str): Output format ('webp', 'jpg', 'pil').
         """
-        self.logger = configure(
+        self.logger = ColorPaws(
             name=self.__class__.__name__, 
             log_on=log_on, 
             log_to=log_to
