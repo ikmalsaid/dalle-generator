@@ -114,6 +114,7 @@ class DalleGenerator():
     def __get_webdriver(self):
         try:            
             options = Options()
+            options.add_argument('--headless')
             options.add_argument('--disable-gpu')
             options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors"])
             
