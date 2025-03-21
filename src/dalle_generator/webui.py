@@ -2,7 +2,7 @@ from datetime import datetime
 import gradio as gr
 
 def DalleWebUI(client, host: str = None, port: int = None, browser: bool = True, upload_size: str = "4MB",
-               public: bool = False, limit: int = 1, quiet: bool = True):
+               public: bool = False, limit: int = 1, quiet: bool = False):
     """
     Start Dalle Generator Web UI with all features.
     

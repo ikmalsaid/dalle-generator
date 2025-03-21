@@ -366,24 +366,25 @@ class DalleGenerator():
             self.logger.error(f"WebAPI error: {str(e)}")
             raise
 
-    def start_webui(self, host: str = "0.0.0.0", port: int = 5735, browser: bool = True,
-                    upload_size: str = "4MB", public: bool = False, limit: int = 10):
+    def start_webui(self, host: str = "0.0.0.0", port: int = 7680, browser: bool = False, upload_size: str = "4MB",
+                    public: bool = False, limit: int = 10, quiet: bool = False):
         """
         Start Atelier WebUI with all features.
         
         Parameters:
         - host (str): Server host (default: "0.0.0.0")
-        - port (int): Server port (default: 5735) 
-        - browser (bool): Launch browser automatically (default: True)
+        - port (int): Server port (default: 7680) 
+        - browser (bool): Launch browser automatically (default: False)
         - upload_size (str): Maximum file size for uploads (default: "4MB")
         - public (bool): Enable public URL mode (default: False)
         - limit (int): Maximum number of concurrent requests (default: 10)
+        - quiet (bool): Enable quiet mode (default: False)
         """
         try:
             from .webui import DalleWebUI
             
-            DalleWebUI(self, host=host, port=port, browser=browser,
-                           upload_size=upload_size, public=public, limit=limit)
+            DalleWebUI(self, host=host, port=port, browser=browser, upload_size=upload_size,
+                       public=public, limit=limit, quiet=quiet)
         
         except Exception as e:
             self.logger.error(f"Error in start_wui: {str(e)}")
