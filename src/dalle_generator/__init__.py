@@ -11,7 +11,6 @@ from selenium import webdriver
 from importlib import resources
 from colorpaws import ColorPaws
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
@@ -113,9 +112,10 @@ class DalleGenerator():
     
     def __get_webdriver(self):
         try:            
-            options = Options()
+            options = webdriver.ChromeOptions()
             options.add_argument('--headless')
-            options.add_argument('--disable-gpu')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--disable-dev-shm-usage')
             options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors"])
             
             try:
@@ -328,18 +328,21 @@ class DalleGenerator():
 
     def image_generate(self, prompt):
         try:
+            task_id = self.__get_task_id()
+            
+            if not prompt or prompt == '':
+                raise ValueError('Please enter a prompt to continue!')
+            
             self.__driver.get(self.__se)
             self.__driver.refresh()
             
-            task_id = self.__get_task_id()
-            
             try:
                 self.__driver.find_element(By.CLASS_NAME, "gih_pink")
-                self.logger.info(f"[{task_id}] Processing request in legacy mode!")
+                self.logger.info(f"[{task_id}] Processing request in V1 mode!")
                 return self.__v1(prompt, task_id)
             
             except NoSuchElementException:
-                self.logger.info(f"[{task_id}] Processing request in latest mode!")
+                self.logger.info(f"[{task_id}] Processing request in V2 mode!")
                 return self.__v2(prompt, task_id)
         
         except Exception as e:
@@ -366,14 +369,14 @@ class DalleGenerator():
             self.logger.error(f"WebAPI error: {str(e)}")
             raise
 
-    def start_webui(self, host: str = "0.0.0.0", port: int = 7680, browser: bool = False, upload_size: str = "4MB",
+    def start_webui(self, host: str = "0.0.0.0", port: int = 7860, browser: bool = False, upload_size: str = "4MB",
                     public: bool = False, limit: int = 10, quiet: bool = False):
         """
         Start Atelier WebUI with all features.
         
         Parameters:
         - host (str): Server host (default: "0.0.0.0")
-        - port (int): Server port (default: 7680) 
+        - port (int): Server port (default: 7860) 
         - browser (bool): Launch browser automatically (default: False)
         - upload_size (str): Maximum file size for uploads (default: "4MB")
         - public (bool): Enable public URL mode (default: False)

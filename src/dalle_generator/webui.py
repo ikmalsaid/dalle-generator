@@ -163,7 +163,7 @@ def DalleWebUI(client, host: str = None, port: int = None, browser: bool = True,
         def State(name:list):
             return gr.State(name)
 
-        def truncate_prompt(prompt, max_length=50):
+        def truncate_prompt(prompt, max_length=80):
             if prompt is None or prompt == "": return "No Prompt"
             return (prompt[:max_length] + '...') if len(prompt) > max_length else prompt
         

@@ -56,11 +56,12 @@ client = DalleGenerator(mode="webui")
 # OR
 client.start_webui(
     host="0.0.0.0",    # Server host
-    port=5735,         # Server port
+    port=7860,         # Server port
     browser=True,      # Launch browser
     upload_size="4MB", # Max upload size
     public=False,      # Enable public URL
-    limit=10           # Max concurrent requests
+    limit=10,          # Max concurrent requests
+    quiet=False        # Quiet mode
 )
 ```
 
